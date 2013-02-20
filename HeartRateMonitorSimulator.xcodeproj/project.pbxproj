@@ -18,7 +18,8 @@
 		D99D1FAC16D51DFC00F3D9F5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D99D1FAB16D51DFC00F3D9F5 /* Default-568h@2x.png */; };
 		D99D1FAF16D51DFC00F3D9F5 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D99D1FAD16D51DFC00F3D9F5 /* MainStoryboard_iPhone.storyboard */; };
 		D99D1FB216D51DFC00F3D9F5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D99D1FB016D51DFC00F3D9F5 /* MainStoryboard_iPad.storyboard */; };
-		D99D1FB516D51DFC00F3D9F5 /* BLEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D1FB416D51DFC00F3D9F5 /* BLEViewController.m */; };
+		D99D1FBC16D51E4700F3D9F5 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99D1FBB16D51E4700F3D9F5 /* CoreBluetooth.framework */; };
+		D99D1FBF16D51EF200F3D9F5 /* PeripheralManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D1FBE16D51EF200F3D9F5 /* PeripheralManagerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,8 +38,9 @@
 		D99D1FAB16D51DFC00F3D9F5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D99D1FAE16D51DFC00F3D9F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		D99D1FB116D51DFC00F3D9F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		D99D1FB316D51DFC00F3D9F5 /* BLEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEViewController.h; sourceTree = "<group>"; };
-		D99D1FB416D51DFC00F3D9F5 /* BLEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLEViewController.m; sourceTree = "<group>"; };
+		D99D1FBB16D51E4700F3D9F5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D99D1FBD16D51EF200F3D9F5 /* PeripheralManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeripheralManagerViewController.h; sourceTree = "<group>"; };
+		D99D1FBE16D51EF200F3D9F5 /* PeripheralManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeripheralManagerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D99D1FBC16D51E4700F3D9F5 /* CoreBluetooth.framework in Frameworks */,
 				D99D1F9616D51DFC00F3D9F5 /* UIKit.framework in Frameworks */,
 				D99D1F9816D51DFC00F3D9F5 /* Foundation.framework in Frameworks */,
 				D99D1F9A16D51DFC00F3D9F5 /* CoreGraphics.framework in Frameworks */,
@@ -58,6 +61,7 @@
 		D99D1F8916D51DFC00F3D9F5 = {
 			isa = PBXGroup;
 			children = (
+				D99D1FBB16D51E4700F3D9F5 /* CoreBluetooth.framework */,
 				D99D1F9B16D51DFC00F3D9F5 /* HeartRateMonitorSimulator */,
 				D99D1F9416D51DFC00F3D9F5 /* Frameworks */,
 				D99D1F9316D51DFC00F3D9F5 /* Products */,
@@ -85,12 +89,12 @@
 		D99D1F9B16D51DFC00F3D9F5 /* HeartRateMonitorSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				D99D1FBD16D51EF200F3D9F5 /* PeripheralManagerViewController.h */,
+				D99D1FBE16D51EF200F3D9F5 /* PeripheralManagerViewController.m */,
 				D99D1FA416D51DFC00F3D9F5 /* BLEAppDelegate.h */,
 				D99D1FA516D51DFC00F3D9F5 /* BLEAppDelegate.m */,
 				D99D1FAD16D51DFC00F3D9F5 /* MainStoryboard_iPhone.storyboard */,
 				D99D1FB016D51DFC00F3D9F5 /* MainStoryboard_iPad.storyboard */,
-				D99D1FB316D51DFC00F3D9F5 /* BLEViewController.h */,
-				D99D1FB416D51DFC00F3D9F5 /* BLEViewController.m */,
 				D99D1F9C16D51DFC00F3D9F5 /* Supporting Files */,
 			);
 			path = HeartRateMonitorSimulator;
@@ -180,7 +184,7 @@
 			files = (
 				D99D1FA216D51DFC00F3D9F5 /* main.m in Sources */,
 				D99D1FA616D51DFC00F3D9F5 /* BLEAppDelegate.m in Sources */,
-				D99D1FB516D51DFC00F3D9F5 /* BLEViewController.m in Sources */,
+				D99D1FBF16D51EF200F3D9F5 /* PeripheralManagerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

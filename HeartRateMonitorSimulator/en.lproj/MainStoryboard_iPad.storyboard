@@ -1,21 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2519" systemVersion="12A206j" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C2034" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1856"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--Peripheral Manager View Controller - Peripheral Manager-->
         <scene sceneID="4">
             <objects>
-                <viewController id="2" customClass="BLEViewController" sceneMemberID="viewController">
+                <viewController title="Peripheral Manager" id="2" customClass="PeripheralManagerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Heart Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LaT-pi-uFy">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fR-E2-zxb">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" maximumValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="iM3-7H-ofr">
+                                <connections>
+                                    <action selector="heartRateStepper:" destination="2" eventType="valueChanged" id="kEe-OL-gMf"/>
+                                </connections>
+                            </stepper>
+                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gYJ-vo-0s0">
+                                <connections>
+                                    <action selector="advertiseSwitch:" destination="2" eventType="valueChanged" id="j9w-A2-y3I"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Advertise" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUs-sH-plg">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nUs-sH-plg" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="0r1-8m-Gvd"/>
+                            <constraint firstAttribute="trailing" secondItem="LaT-pi-uFy" secondAttribute="trailing" constant="250" id="RXS-VL-ym6"/>
+                            <constraint firstItem="8fR-E2-zxb" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="UMM-aS-qrS"/>
+                            <constraint firstAttribute="trailing" secondItem="iM3-7H-ofr" secondAttribute="trailing" constant="214" id="etC-1e-2Tw"/>
+                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="196" id="gSb-5W-tBI"/>
+                            <constraint firstItem="nUs-sH-plg" firstAttribute="centerX" secondItem="gYJ-vo-0s0" secondAttribute="centerX" type="default" id="sDB-k0-WhB"/>
+                            <constraint firstItem="nUs-sH-plg" firstAttribute="top" secondItem="5" secondAttribute="top" constant="244" id="t1Z-nh-SVV"/>
+                            <constraint firstAttribute="trailing" secondItem="8fR-E2-zxb" secondAttribute="trailing" constant="192" id="uhi-ek-aWK"/>
+                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="top" secondItem="nUs-sH-plg" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="vm1-Eh-aOD"/>
+                            <constraint firstItem="iM3-7H-ofr" firstAttribute="top" secondItem="LaT-pi-uFy" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="y0k-vk-13Z"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="heartRateStepper" destination="iM3-7H-ofr" id="KgN-qH-FyN"/>
+                        <outlet property="heartRateValueLabel" destination="8fR-E2-zxb" id="4GY-V3-oDb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-678" y="-332"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
