@@ -37,14 +37,28 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Host Bluetooth Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbK-tZ-Qoh">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmz-F8-XPh">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="nUs-sH-plg" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="0r1-8m-Gvd"/>
+                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="leading" secondItem="dbK-tZ-Qoh" secondAttribute="leading" type="default" id="Kf3-at-tl4"/>
                             <constraint firstAttribute="trailing" secondItem="LaT-pi-uFy" secondAttribute="trailing" constant="250" id="RXS-VL-ym6"/>
                             <constraint firstItem="8fR-E2-zxb" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="UMM-aS-qrS"/>
+                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="top" secondItem="5" secondAttribute="top" constant="59" id="VAD-CP-U3A"/>
                             <constraint firstAttribute="trailing" secondItem="iM3-7H-ofr" secondAttribute="trailing" constant="214" id="etC-1e-2Tw"/>
                             <constraint firstItem="gYJ-vo-0s0" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="196" id="gSb-5W-tBI"/>
+                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="top" secondItem="dbK-tZ-Qoh" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="hgh-IJ-CoK"/>
+                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="80" id="pK5-UW-DTt"/>
                             <constraint firstItem="nUs-sH-plg" firstAttribute="centerX" secondItem="gYJ-vo-0s0" secondAttribute="centerX" type="default" id="sDB-k0-WhB"/>
                             <constraint firstItem="nUs-sH-plg" firstAttribute="top" secondItem="5" secondAttribute="top" constant="244" id="t1Z-nh-SVV"/>
                             <constraint firstAttribute="trailing" secondItem="8fR-E2-zxb" secondAttribute="trailing" constant="192" id="uhi-ek-aWK"/>
@@ -55,6 +69,7 @@
                     <connections>
                         <outlet property="heartRateStepper" destination="iM3-7H-ofr" id="KgN-qH-FyN"/>
                         <outlet property="heartRateValueLabel" destination="8fR-E2-zxb" id="4GY-V3-oDb"/>
+                        <outlet property="hostBluetoothStatus" destination="Cmz-F8-XPh" id="GIO-eG-jht"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
