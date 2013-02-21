@@ -6,51 +6,69 @@
 //  Copyright (c) 2013 Chip Keyes. All rights reserved.
 //
 
+// ****************    This code only supports a single connected subscriber    ****************
+
 #import "PeripheralManagerViewController.h"
 #import "BLESensorLocationViewController.h"
 
-#define SAMPLE_CLOCK_FREQUENCY_HERTZ 1
 
 @interface PeripheralManagerViewController ()
 
 // timer which drives the transmission of the heart rate pulse measurement
 @property (nonatomic, strong) dispatch_source_t sampleClock;
 
-// queues transmissions to Centrals
+// queues transmissions to Central
 @property (nonatomic,strong) dispatch_queue_t transmitQueue;
 
-
-// displays CBCentralManager status (role of iphone/ipad)
+// displays CBPeripheralManager status 
 @property (weak, nonatomic) IBOutlet UILabel *hostBluetoothStatus;
 
-
+// displays heart rate value
 @property (weak, nonatomic) IBOutlet UILabel *heartRateValueLabel;
 
+// stepper for incrementing heart rate
 @property (weak, nonatomic) IBOutlet UIStepper *heartRateStepper;
 
+// the latest heart rate updated from the stepper
 @property (atomic, readwrite) unsigned char heartRate;
+
+// outlet for switch used to turn advertising on/off
 @property (weak, nonatomic) IBOutlet UISwitch *advertiseSwitchControl;
 
-- (IBAction)advertiseSwitch:(UISwitch *)sender;
-- (IBAction)heartRateStepper:(UIStepper *)sender;
-
+// peripheralManager property wihc manafges advertising, connection state, etc.
 @property (strong, nonatomic)CBPeripheralManager        *peripheralManager;
+
+// the mutable heart rate serve
 @property (strong, nonatomic)CBMutableService           *heartRateService;
+
+// the mutable heart rate measurement service
 @property (strong, nonatomic)CBMutableCharacteristic    *heartRateMeasurementCharacteristic;
+
+// NSData representation of heart rate measurement 
 @property (strong, nonatomic) NSData                    *heartRateData;
 
-
+// boolean flag indicating whether there are any subscribers to the service
 @property (nonatomic, readwrite) BOOL haveSubscriber;
+
+// boolean flag indicating communication channel is ready for more bytes
 @property (nonatomic, readwrite) BOOL sendReady;
+
+// advertsing switch handler
+- (IBAction)advertiseSwitch:(UISwitch *)sender;
+
+// hert rate stepper handler
+- (IBAction)heartRateStepper:(UIStepper *)sender;
 
 @end
 
-//Maximum Transmission Unit
+//Maximum Transmission Unit -- not currently used since heart rate data is only 2 bytes
 #define NOTIFY_MTU 20
 
 @implementation PeripheralManagerViewController
 
+#pragma mark- Properties
 
+// Getter for transmit queue
 -(dispatch_queue_t) transmitQueue
 {
     if (! _transmitQueue)
@@ -61,6 +79,7 @@
 }
 
 
+// lazy initializer/getter for heart rate data
 -(void)updateHeartRateData
 {
     unsigned char data[2];
@@ -78,11 +97,14 @@
 }
 
 
+#define SAMPLE_CLOCK_FREQUENCY_HERTZ 1
+
 /*
  *
  * Method Name:  sampleClock
  *
- * Description:  
+ * Description:  Samples and sends heart rate data to subscribers 
+ *    smaple frequency set by SAMPLE_CLOCK_FREQUENCY in viewDidLoad
  *
  * Parameter(s): None
  *
@@ -135,6 +157,34 @@
     return _heartRateService;
 }
 
+
+// Increment or decrement heart rate to be sent to subscribers
+- (IBAction)heartRateStepper:(UIStepper *)sender
+{
+    self.heartRate = (unsigned char)sender.value;
+    self.heartRateValueLabel.text = [NSString stringWithFormat:@"%u",self.heartRate];
+}
+
+
+// Start or stop advertising based upon switch position
+- (IBAction)advertiseSwitch:(UISwitch *)sender
+{
+    if (sender.on)
+    {
+        DLog(@"Advertising");
+        [self.peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:HEART_RATE_MEASUREMENT_SERVICE]]}];
+    }
+    else
+    {
+        DLog(@"Stop Advertising");
+        [self.peripheralManager stopAdvertising];        
+    }
+}
+
+
+#pragma mark- Controller Lifecyle
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -144,6 +194,18 @@
     return self;
 }
 
+
+/*
+ *
+ * Method Name:  viewDidLoad
+ *
+ * Description:  View controller initializations
+ *
+ *    set up UI, initialize scalar properties, start the sample clock
+ *
+ * Parameter(s): <#parameters#>
+ *
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -163,9 +225,10 @@
     [self.peripheralManager addService:self.heartRateService];
     
      dispatch_source_set_timer(self.sampleClock, DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC / SAMPLE_CLOCK_FREQUENCY_HERTZ, 1ull * NSEC_PER_SEC/100);
-    
 }
 
+
+// Stop the timer
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self.peripheralManager stopAdvertising];
@@ -182,7 +245,8 @@
 }
 
 
-// Seque tothe embedded discovered services table view controller
+
+// Seque to the embedded table view controller with body sensor location choices
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
@@ -191,34 +255,13 @@
        
         if ([segue.destinationViewController isKindOfClass:[BLESensorLocationViewController class]])
         {
-           
+           // nothing needed at this time
         }
     }
 }
 
 
-- (IBAction)heartRateStepper:(UIStepper *)sender
-{
-    self.heartRate = (unsigned char)sender.value;
-    self.heartRateValueLabel.text = [NSString stringWithFormat:@"%u",self.heartRate];
-
-    
-}
-
-- (IBAction)advertiseSwitch:(UISwitch *)sender
-{
-    if (sender.on)
-    {
-        DLog(@"Advertising");
-        [self.peripheralManager startAdvertising:@{CBAdvertisementDataServiceUUIDsKey : @[[CBUUID UUIDWithString:HEART_RATE_MEASUREMENT_SERVICE]]}];
-    }
-    else
-    {
-        DLog(@"Stop Advertising");
-        [self.peripheralManager stopAdvertising];
-        
-    }
-}
+#pragma mark- Private Methods
 
 /** Sends the next amount of data to the connected central
  */
@@ -226,17 +269,14 @@
 {
     DLog(@"Entering sendData");
     
-
     if (self.sendReady)
     {
-        
         // Send it
         bool success = [self.peripheralManager updateValue:self.heartRateData forCharacteristic:self.heartRateMeasurementCharacteristic onSubscribedCentrals:nil];
         
         if (success)
         {
-            // force the peripheralManager to allow the next transmission to occur
-            //self.sendReady = NO;
+            // log data that was sent
             const uint8_t *reportData = [self.heartRateData  bytes];
             
             NSUInteger flag = reportData[0];
@@ -246,9 +286,7 @@
             bpm = reportData[1];
             
             DLog(@"Heart Rate Measurement Sent: %i",bpm);
-            
         }
-        
     }
 }
 
@@ -314,32 +352,27 @@
     }
     
     self.hostBluetoothStatus.text = [[self class ] getCBPeripheralStateName: peripheralManager.state];
-
 }
 
 
-/** Catch when someone subscribes to our characteristic, then start sending them data
- */
+//Catch when someone subscribes to our characteristic, then start sending them data
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
 {
     DLog(@"Central subscribed to characteristic");
     self.haveSubscriber = YES;
-    
-    
 }
 
 
-/** Recognise when the central unsubscribes
- */
+// Recognise when the central unsubscribes
 - (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
 {
     DLog(@"Central unsubscribed from characteristic");
     self.haveSubscriber = NO;
 }
 
-/** This callback comes in when the PeripheralManager is ready to send the next chunk of data.
- *  This is to ensure that packets will arrive in the order they are sent
- */
+
+// This callback comes in when the PeripheralManager is ready to send the next chunk of data.
+// This is to ensure that packets will arrive in the order they are sent
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
 {
     NSLog(@"PeripheralManagerIsReadyToUpdateSubscribers");
