@@ -4,6 +4,45 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
+        <!--Sensor Location View Controller-->
+        <scene sceneID="tAB-a2-6we">
+            <objects>
+                <tableViewController id="DFc-ZJ-Ipi" customClass="BLESensorLocationViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Qt0-2Z-RMF">
+                        <rect key="frame" x="0.0" y="0.0" width="466" height="435"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SensorCell" textLabel="b8r-fg-Fau" style="IBUITableViewCellStyleDefault" id="5NB-eS-Ca2">
+                                <rect key="frame" x="0.0" y="54" width="466" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="31" y="1" width="404" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b8r-fg-Fau">
+                                            <rect key="frame" x="10" y="0.0" width="384" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="DFc-ZJ-Ipi" id="OF1-tT-pUJ"/>
+                            <outlet property="delegate" destination="DFc-ZJ-Ipi" id="AGd-gI-Bl1"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SNM-86-rcQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-411" y="15"/>
+        </scene>
         <!--Peripheral Manager View Controller - Peripheral Manager-->
         <scene sceneID="4">
             <objects>
@@ -18,8 +57,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fR-E2-zxb">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="v3C-ty-DB2"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" maximumValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="iM3-7H-ofr">
@@ -27,7 +69,7 @@
                                     <action selector="heartRateStepper:" destination="2" eventType="valueChanged" id="kEe-OL-gMf"/>
                                 </connections>
                             </stepper>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gYJ-vo-0s0">
+                            <switch opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gYJ-vo-0s0">
                                 <connections>
                                     <action selector="advertiseSwitch:" destination="2" eventType="valueChanged" id="j9w-A2-y3I"/>
                                 </connections>
@@ -43,30 +85,64 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmz-F8-XPh">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Heart Rate Monitor Simulator" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3w-z6-Z6D">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="BeetsHR.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="Vuj-se-h3e">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="306" id="DHo-vX-XFh"/>
+                                    <constraint firstAttribute="height" constant="203" id="LZg-NO-PM6"/>
+                                </constraints>
+                            </imageView>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49I-wH-Xzr">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="DFc-ZJ-Ipi" kind="embed" identifier="ShowSensorLocations" id="wKR-5S-mcj"/>
+                                </connections>
+                            </containerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Body Sensor Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHi-GC-2NM">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="nUs-sH-plg" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="0r1-8m-Gvd"/>
-                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="leading" secondItem="dbK-tZ-Qoh" secondAttribute="leading" type="default" id="Kf3-at-tl4"/>
-                            <constraint firstAttribute="trailing" secondItem="LaT-pi-uFy" secondAttribute="trailing" constant="250" id="RXS-VL-ym6"/>
-                            <constraint firstItem="8fR-E2-zxb" firstAttribute="baseline" secondItem="LaT-pi-uFy" secondAttribute="baseline" type="default" id="UMM-aS-qrS"/>
-                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="top" secondItem="5" secondAttribute="top" constant="59" id="VAD-CP-U3A"/>
-                            <constraint firstAttribute="trailing" secondItem="iM3-7H-ofr" secondAttribute="trailing" constant="214" id="etC-1e-2Tw"/>
-                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="196" id="gSb-5W-tBI"/>
-                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="top" secondItem="dbK-tZ-Qoh" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="hgh-IJ-CoK"/>
-                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="80" id="pK5-UW-DTt"/>
-                            <constraint firstItem="nUs-sH-plg" firstAttribute="centerX" secondItem="gYJ-vo-0s0" secondAttribute="centerX" type="default" id="sDB-k0-WhB"/>
-                            <constraint firstItem="nUs-sH-plg" firstAttribute="top" secondItem="5" secondAttribute="top" constant="244" id="t1Z-nh-SVV"/>
-                            <constraint firstAttribute="trailing" secondItem="8fR-E2-zxb" secondAttribute="trailing" constant="192" id="uhi-ek-aWK"/>
-                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="top" secondItem="nUs-sH-plg" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="vm1-Eh-aOD"/>
-                            <constraint firstItem="iM3-7H-ofr" firstAttribute="top" secondItem="LaT-pi-uFy" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="y0k-vk-13Z"/>
+                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="0EC-Yc-En7"/>
+                            <constraint firstItem="s3w-z6-Z6D" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" type="default" id="43t-Yh-H2K"/>
+                            <constraint firstItem="dbK-tZ-Qoh" firstAttribute="top" secondItem="5" secondAttribute="top" constant="230" id="6Xp-LC-EZE"/>
+                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="BIJ-88-Nhb"/>
+                            <constraint firstItem="49I-wH-Xzr" firstAttribute="top" secondItem="5" secondAttribute="top" constant="503" id="ClB-7K-wgO"/>
+                            <constraint firstItem="49I-wH-Xzr" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="44" id="HN3-7J-jcU"/>
+                            <constraint firstItem="s3w-z6-Z6D" firstAttribute="top" secondItem="5" secondAttribute="top" constant="41" id="JbW-18-u2H"/>
+                            <constraint firstItem="Vuj-se-h3e" firstAttribute="centerX" secondItem="s3w-z6-Z6D" secondAttribute="centerX" type="default" id="KlG-0y-uP6"/>
+                            <constraint firstItem="LaT-pi-uFy" firstAttribute="top" secondItem="5" secondAttribute="top" constant="125" id="LLU-mW-7A3"/>
+                            <constraint firstItem="nUs-sH-plg" firstAttribute="top" secondItem="5" secondAttribute="top" constant="306" id="P4C-lG-MFk"/>
+                            <constraint firstItem="iM3-7H-ofr" firstAttribute="centerX" secondItem="LaT-pi-uFy" secondAttribute="centerX" type="default" id="Sap-9v-ogf"/>
+                            <constraint firstItem="Vuj-se-h3e" firstAttribute="top" secondItem="s3w-z6-Z6D" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="TFw-9k-XpL"/>
+                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="centerX" secondItem="nUs-sH-plg" secondAttribute="centerX" type="default" id="XMq-wK-XXE"/>
+                            <constraint firstAttribute="bottom" secondItem="49I-wH-Xzr" secondAttribute="bottom" constant="66" id="Zz9-XV-OVJ"/>
+                            <constraint firstItem="Cmz-F8-XPh" firstAttribute="bottom" secondItem="Vuj-se-h3e" secondAttribute="bottom" type="default" id="g1B-5H-ukS"/>
+                            <constraint firstItem="8fR-E2-zxb" firstAttribute="top" secondItem="LaT-pi-uFy" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="hDZ-8q-fa7"/>
+                            <constraint firstItem="SHi-GC-2NM" firstAttribute="centerX" secondItem="49I-wH-Xzr" secondAttribute="centerX" type="default" id="hTC-hJ-Fkv"/>
+                            <constraint firstItem="iM3-7H-ofr" firstAttribute="top" secondItem="5" secondAttribute="top" constant="193" id="iHn-qk-TVG"/>
+                            <constraint firstAttribute="trailing" secondItem="iM3-7H-ofr" secondAttribute="trailing" constant="67" id="iVd-n7-i8W"/>
+                            <constraint firstItem="SHi-GC-2NM" firstAttribute="top" secondItem="5" secondAttribute="top" constant="457" id="k4V-lK-HdN"/>
+                            <constraint firstItem="SHi-GC-2NM" firstAttribute="leading" secondItem="5" secondAttribute="leading" constant="189" id="nuH-ey-e5X"/>
+                            <constraint firstAttribute="trailing" secondItem="8fR-E2-zxb" secondAttribute="trailing" constant="98" id="sib-5o-a6z"/>
+                            <constraint firstItem="Vuj-se-h3e" firstAttribute="centerX" secondItem="nUs-sH-plg" secondAttribute="centerX" type="default" id="udG-iS-H9s"/>
+                            <constraint firstItem="gYJ-vo-0s0" firstAttribute="top" secondItem="nUs-sH-plg" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="xa3-Q9-9hh"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
+                        <outlet property="advertiseSwitchControl" destination="gYJ-vo-0s0" id="Bw8-09-PjV"/>
                         <outlet property="heartRateStepper" destination="iM3-7H-ofr" id="KgN-qH-FyN"/>
                         <outlet property="heartRateValueLabel" destination="8fR-E2-zxb" id="4GY-V3-oDb"/>
                         <outlet property="hostBluetoothStatus" destination="Cmz-F8-XPh" id="GIO-eG-jht"/>
@@ -74,9 +150,31 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678" y="-332"/>
+            <point key="canvasLocation" x="-1355" y="-378"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BeetsHR.jpeg" width="225" height="225"/>
+    </resources>
+    <classes>
+        <class className="BLESensorLocationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BLESensorLocationViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PeripheralManagerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PeripheralManagerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="advertiseSwitch:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="heartRateStepper:" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="advertiseSwitchControl" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="heartRateStepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="heartRateValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hostBluetoothStatus" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

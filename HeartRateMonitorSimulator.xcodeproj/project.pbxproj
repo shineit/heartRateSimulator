@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9814E4B16D5838D00887FD2 /* BeetsHR.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = D9814E4A16D5838D00887FD2 /* BeetsHR.jpeg */; };
+		D9814E4E16D5884300887FD2 /* BLESensorLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9814E4D16D5884300887FD2 /* BLESensorLocationViewController.m */; };
 		D99D1F9616D51DFC00F3D9F5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99D1F9516D51DFC00F3D9F5 /* UIKit.framework */; };
 		D99D1F9816D51DFC00F3D9F5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99D1F9716D51DFC00F3D9F5 /* Foundation.framework */; };
 		D99D1F9A16D51DFC00F3D9F5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99D1F9916D51DFC00F3D9F5 /* CoreGraphics.framework */; };
@@ -23,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9814E4A16D5838D00887FD2 /* BeetsHR.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BeetsHR.jpeg; sourceTree = "<group>"; };
+		D9814E4C16D5884300887FD2 /* BLESensorLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLESensorLocationViewController.h; sourceTree = "<group>"; };
+		D9814E4D16D5884300887FD2 /* BLESensorLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLESensorLocationViewController.m; sourceTree = "<group>"; };
 		D99D1F9216D51DFC00F3D9F5 /* HeartRateMonitorSimulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeartRateMonitorSimulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D99D1F9516D51DFC00F3D9F5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D99D1F9716D51DFC00F3D9F5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,6 +94,8 @@
 		D99D1F9B16D51DFC00F3D9F5 /* HeartRateMonitorSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				D9814E4C16D5884300887FD2 /* BLESensorLocationViewController.h */,
+				D9814E4D16D5884300887FD2 /* BLESensorLocationViewController.m */,
 				D99D1FBD16D51EF200F3D9F5 /* PeripheralManagerViewController.h */,
 				D99D1FBE16D51EF200F3D9F5 /* PeripheralManagerViewController.m */,
 				D99D1FA416D51DFC00F3D9F5 /* BLEAppDelegate.h */,
@@ -103,6 +110,7 @@
 		D99D1F9C16D51DFC00F3D9F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D9814E4A16D5838D00887FD2 /* BeetsHR.jpeg */,
 				D99D1F9D16D51DFC00F3D9F5 /* HeartRateMonitorSimulator-Info.plist */,
 				D99D1F9E16D51DFC00F3D9F5 /* InfoPlist.strings */,
 				D99D1FA116D51DFC00F3D9F5 /* main.m */,
@@ -172,6 +180,7 @@
 				D99D1FAC16D51DFC00F3D9F5 /* Default-568h@2x.png in Resources */,
 				D99D1FAF16D51DFC00F3D9F5 /* MainStoryboard_iPhone.storyboard in Resources */,
 				D99D1FB216D51DFC00F3D9F5 /* MainStoryboard_iPad.storyboard in Resources */,
+				D9814E4B16D5838D00887FD2 /* BeetsHR.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +194,7 @@
 				D99D1FA216D51DFC00F3D9F5 /* main.m in Sources */,
 				D99D1FA616D51DFC00F3D9F5 /* BLEAppDelegate.m in Sources */,
 				D99D1FBF16D51EF200F3D9F5 /* PeripheralManagerViewController.m in Sources */,
+				D9814E4E16D5884300887FD2 /* BLESensorLocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +327,7 @@
 				D99D1FBA16D51DFC00F3D9F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

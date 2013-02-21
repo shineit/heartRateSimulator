@@ -1,23 +1,184 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2519" systemVersion="12A206j" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C2034" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="XQt-5y-TEG">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1856"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
-        <scene sceneID="5">
+        <!--Peripheral Manager View Controller - Peripheral Manager-->
+        <scene sceneID="gNN-vQ-SZ8">
             <objects>
-                <viewController id="2" customClass="BLEViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <viewController title="Peripheral Manager" id="XQt-5y-TEG" customClass="PeripheralManagerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="89j-Gq-1xW">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Heart Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r4P-we-w7n">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Value" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ane-TZ-zIG">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" maximumValue="255" translatesAutoresizingMaskIntoConstraints="NO" id="sLg-GB-zVX">
+                                <connections>
+                                    <action selector="heartRateStepper:" destination="XQt-5y-TEG" eventType="valueChanged" id="oWo-gi-4aw"/>
+                                </connections>
+                            </stepper>
+                            <switch opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2op-gH-srm">
+                                <connections>
+                                    <action selector="advertiseSwitch:" destination="XQt-5y-TEG" eventType="valueChanged" id="HWa-Qf-BPi"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Advertise" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60n-6W-zFB">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Host Bluetooth Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNw-nN-Aar">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c70-3v-1YZ">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19" id="kLj-km-jTL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Heart Rate Monitor Simulator" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YSF-dk-nPt">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="360" id="5hd-sG-qOW"/>
+                                    <constraint firstAttribute="height" constant="31" id="MWT-33-2pm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="BeetsHR.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="Buf-Z9-f6e">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="178" id="lac-gf-XFL"/>
+                                    <constraint firstAttribute="height" constant="80" id="vVp-kR-jYA"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Body Sensor Location" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e3x-tQ-Bc0">
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQA-ba-Qqb">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="S8w-EH-mjg" kind="embed" id="kEk-DR-wx7"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="SQA-ba-Qqb" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="14" id="2Gn-GW-BHi"/>
+                            <constraint firstItem="2op-gH-srm" firstAttribute="top" secondItem="60n-6W-zFB" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="3Q3-n7-99V"/>
+                            <constraint firstAttribute="trailing" secondItem="SQA-ba-Qqb" secondAttribute="trailing" constant="15" id="5fG-6y-AYK"/>
+                            <constraint firstItem="sLg-GB-zVX" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="199" id="8FV-Be-RV3"/>
+                            <constraint firstItem="r4P-we-w7n" firstAttribute="baseline" secondItem="oNw-nN-Aar" secondAttribute="baseline" type="default" id="ATn-d4-3je"/>
+                            <constraint firstAttribute="trailing" secondItem="Buf-Z9-f6e" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="BiE-cL-dDE"/>
+                            <constraint firstItem="Ane-TZ-zIG" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="166" id="Caa-Bx-d3e"/>
+                            <constraint firstAttribute="trailing" secondItem="sLg-GB-zVX" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="Fkp-tg-XzS"/>
+                            <constraint firstItem="SQA-ba-Qqb" firstAttribute="top" secondItem="e3x-tQ-Bc0" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="IPP-9N-Wvx"/>
+                            <constraint firstItem="e3x-tQ-Bc0" firstAttribute="bottom" secondItem="sLg-GB-zVX" secondAttribute="bottom" type="default" id="OoI-EC-Qju"/>
+                            <constraint firstItem="60n-6W-zFB" firstAttribute="top" secondItem="YSF-dk-nPt" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Oy0-Gu-DJM"/>
+                            <constraint firstItem="2op-gH-srm" firstAttribute="leading" secondItem="60n-6W-zFB" secondAttribute="leading" type="default" id="YCP-iE-eOW"/>
+                            <constraint firstItem="e3x-tQ-Bc0" firstAttribute="centerX" secondItem="89j-Gq-1xW" secondAttribute="centerX" type="default" id="Z9k-A5-SIC"/>
+                            <constraint firstItem="2op-gH-srm" firstAttribute="leading" secondItem="oNw-nN-Aar" secondAttribute="leading" type="default" id="ddb-2b-1F9"/>
+                            <constraint firstItem="Buf-Z9-f6e" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="47" id="eql-SW-4a9"/>
+                            <constraint firstAttribute="bottom" secondItem="SQA-ba-Qqb" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="f8v-2h-aUj"/>
+                            <constraint firstItem="c70-3v-1YZ" firstAttribute="centerY" secondItem="Ane-TZ-zIG" secondAttribute="centerY" type="default" id="fxq-Bg-cqb"/>
+                            <constraint firstItem="SQA-ba-Qqb" firstAttribute="leading" secondItem="c70-3v-1YZ" secondAttribute="leading" type="default" id="gXy-Tb-1Dt"/>
+                            <constraint firstItem="c70-3v-1YZ" firstAttribute="baseline" secondItem="Ane-TZ-zIG" secondAttribute="baseline" type="default" id="gtq-gG-TyS"/>
+                            <constraint firstItem="sLg-GB-zVX" firstAttribute="leading" secondItem="r4P-we-w7n" secondAttribute="leading" type="default" id="hHB-yg-lnT"/>
+                            <constraint firstItem="e3x-tQ-Bc0" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="256" id="opg-j7-uEe"/>
+                            <constraint firstItem="oNw-nN-Aar" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="142" id="pJb-7c-LeZ"/>
+                            <constraint firstItem="SQA-ba-Qqb" firstAttribute="centerX" secondItem="YSF-dk-nPt" secondAttribute="centerX" type="default" id="qI2-Rf-oC9"/>
+                            <constraint firstItem="r4P-we-w7n" firstAttribute="trailing" secondItem="Ane-TZ-zIG" secondAttribute="trailing" type="default" id="qcH-BH-kCf"/>
+                            <constraint firstItem="YSF-dk-nPt" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="15" id="svO-9F-2sX"/>
+                            <constraint firstItem="c70-3v-1YZ" firstAttribute="leading" secondItem="oNw-nN-Aar" secondAttribute="leading" type="default" id="uxm-6P-rLu"/>
+                        </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <connections>
+                        <outlet property="advertiseSwitchControl" destination="2op-gH-srm" id="he5-06-hNv"/>
+                        <outlet property="heartRateStepper" destination="sLg-GB-zVX" id="lYl-ws-rTS"/>
+                        <outlet property="heartRateValueLabel" destination="Ane-TZ-zIG" id="8oO-BD-byu"/>
+                        <outlet property="hostBluetoothStatus" destination="c70-3v-1YZ" id="Pf6-7n-o16"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uAY-04-cpg" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-1355" y="-378"/>
+        </scene>
+        <!--Sensor Location View Controller-->
+        <scene sceneID="nOF-H0-roO">
+            <objects>
+                <tableViewController id="S8w-EH-mjg" customClass="BLESensorLocationViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="JfL-O4-tYB">
+                        <rect key="frame" x="0.0" y="0.0" width="291" height="242"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SensorCell" textLabel="rah-vY-Qbh" style="IBUITableViewCellStyleDefault" id="Xo2-wY-D8e">
+                                <rect key="frame" x="0.0" y="46" width="291" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="271" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rah-vY-Qbh">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="S8w-EH-mjg" id="84Z-o2-Rva"/>
+                            <outlet property="delegate" destination="S8w-EH-mjg" id="Gqq-HC-HwY"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lOa-Q8-6Za" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-858" y="-205"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BeetsHR.jpeg" width="225" height="225"/>
+    </resources>
+    <classes>
+        <class className="BLESensorLocationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BLESensorLocationViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PeripheralManagerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PeripheralManagerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="advertiseSwitch:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="heartRateStepper:" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="advertiseSwitchControl" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="heartRateStepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="heartRateValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hostBluetoothStatus" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
