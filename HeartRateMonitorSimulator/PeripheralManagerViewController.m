@@ -10,6 +10,7 @@
 
 #import "PeripheralManagerViewController.h"
 #import "BLESensorLocationViewController.h"
+#import "HeartRateMeasurementConfigurationViewController.h"
 
 
 @interface PeripheralManagerViewController ()
@@ -68,6 +69,14 @@
 
 #pragma mark- Properties
 
+
+-(void)setHeartRateMeasurementFlag: (unsigned char)flag
+{
+    DLog(@"heartRateMeasurementFlag Updated");
+    _heartRateMeasurementFlag = flag;
+}
+
+
 // Getter for transmit queue
 -(dispatch_queue_t) transmitQueue
 {
@@ -82,18 +91,32 @@
 // lazy initializer/getter for heart rate data
 -(void)updateHeartRateData
 {
-    unsigned char data[2];
-    // first byte encodes information
-    // lsb indicates byte or integer type for measurement  (0 -> byte)
-    // bit 1 is sensor contact state  (1 -> good)
-    // bit 2 indicates whether contact state bit is valid (1 is valid)
-    // 6 -> byte data, good sensor contact
-    data[0] = 6;
+    unsigned char data[3];
+    NSUInteger dataLength = 2;
     
-    data[1] = self.heartRate;
+    data[0] = self.heartRateMeasurementFlag;
+    
+    
+    
+    if ( self.heartRateMeasurementFlag & 0x01)
+    {
+        // for now switch back to 1 byte
+        self.heartRateMeasurementFlag = self.heartRateMeasurementFlag & 0xFE;
+        // heart rate measurement is 16 bits
+        // for now put the single byte of data in the lsb
+        data[1] = self.heartRate;
+       
+        
+    }
+    else
+    {
+        data[1] = self.heartRate;
+        dataLength = 2;
+    }
     
     // set the data
-    self.heartRateData = [NSData dataWithBytes:data length:2];
+    self.heartRateData = [NSData dataWithBytes:data length:dataLength];
+
 }
 
 
@@ -214,6 +237,10 @@
     
     self.sendReady = YES;
     
+    // Measurement is byte and body sensor contact not supported
+    _heartRateMeasurementFlag = 0x06;
+    
+    
 	// Do any additional setup after loading the view.
     self.heartRateValueLabel.text = [NSString stringWithFormat:@"%u",(unsigned int)self.heartRateStepper.value];
     
@@ -225,17 +252,28 @@
     [self.peripheralManager addService:self.heartRateService];
     
      dispatch_source_set_timer(self.sampleClock, DISPATCH_TIME_NOW, 1ull * NSEC_PER_SEC / SAMPLE_CLOCK_FREQUENCY_HERTZ, 1ull * NSEC_PER_SEC/100);
+    
+    dispatch_suspend(self.sampleClock);
 }
 
 
 // Stop the timer
 -(void)viewWillDisappear:(BOOL)animated
 {
+    DLog(@"viewWillDisappear Invoked");
     [self.peripheralManager stopAdvertising];
-    dispatch_source_cancel(self.sampleClock);
-    self.sampleClock = nil;
+    dispatch_suspend(self.sampleClock);
+ //   self.sampleClock = nil;
 
     [super viewWillDisappear:animated];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    DLog(@"viewWillAppear Invoked");
+    [super viewWillAppear:animated];
+    
+    dispatch_resume(_sampleClock);
 }
 
 - (void)didReceiveMemoryWarning
@@ -250,12 +288,22 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    if ([segue.identifier isEqualToString:@"ShowSensorLocations"])
+    if ([segue.identifier isEqualToString:@"ShowSensorLocation"])
     {
        
         if ([segue.destinationViewController isKindOfClass:[BLESensorLocationViewController class]])
         {
            // nothing needed at this time
+        }
+    }
+    else if  ([segue.identifier isEqualToString:@"ConfigureMeasurement"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[HeartRateMeasurementConfigurationViewController class]])
+        {
+            HeartRateMeasurementConfigurationViewController *destination = (HeartRateMeasurementConfigurationViewController *)segue.destinationViewController;
+            
+            destination.delegate = self;
+            
         }
     }
 }

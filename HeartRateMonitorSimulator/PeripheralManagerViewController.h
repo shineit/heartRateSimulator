@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "BLEHeartRateConfigurationProtocol.h"
 
-@interface PeripheralManagerViewController : UIViewController <CBPeripheralManagerDelegate>
+@interface PeripheralManagerViewController : UIViewController <CBPeripheralManagerDelegate, BLEHeartRateConfigurationProtocol>
+
+@property (nonatomic, readwrite) unsigned char heartRateMeasurementFlag;
 
 @end
