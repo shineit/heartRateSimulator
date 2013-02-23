@@ -48,6 +48,8 @@
 // NSData representation of heart rate measurement 
 @property (strong, nonatomic) NSData                    *heartRateData;
 
+@property (nonatomic, readwrite) unsigned char heartRateMeasurementFlag;
+
 // boolean flag indicating whether there are any subscribers to the service
 @property (nonatomic, readwrite) BOOL haveSubscriber;
 
@@ -72,8 +74,9 @@
 
 -(void)setHeartRateMeasurementFlag: (unsigned char)flag
 {
-    DLog(@"heartRateMeasurementFlag Updated");
+    
     _heartRateMeasurementFlag = flag;
+    DLog(@"heartRateMeasurementFlag Updated %d",flag);
 }
 
 
@@ -238,7 +241,7 @@
     self.sendReady = YES;
     
     // Measurement is byte and body sensor contact not supported
-    _heartRateMeasurementFlag = 0x06;
+    _heartRateMeasurementFlag = 0x0;
     
     
 	// Do any additional setup after loading the view.
@@ -260,12 +263,14 @@
 // Stop the timer
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     DLog(@"viewWillDisappear Invoked");
     [self.peripheralManager stopAdvertising];
     dispatch_suspend(self.sampleClock);
  //   self.sampleClock = nil;
 
-    [super viewWillDisappear:animated];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -303,6 +308,8 @@
             HeartRateMeasurementConfigurationViewController *destination = (HeartRateMeasurementConfigurationViewController *)segue.destinationViewController;
             
             destination.delegate = self;
+            
+            destination.flagValue = self.heartRateMeasurementFlag;
             
         }
     }

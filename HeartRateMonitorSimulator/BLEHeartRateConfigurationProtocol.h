@@ -10,5 +10,6 @@
 
 @protocol BLEHeartRateConfigurationProtocol <NSObject>
 
-@property (nonatomic, readwrite) unsigned char heartRateMeasurementFlag;
+-(void)setHeartRateMeasurementFlag:(unsigned char)flag;
+
 @end

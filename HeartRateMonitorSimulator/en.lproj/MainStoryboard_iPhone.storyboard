@@ -61,10 +61,10 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="rw7-xx-IwI" kind="push" identifier="ConfigureSensorLocation" id="hcw-bB-ptt"/>
+                                    <segue destination="rw7-xx-IwI" kind="push" identifier="ConfigureMeasurement" id="gud-u6-lqk"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SImulator Configurations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8u-gX-w2H">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Simulator Configurations" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8u-gX-w2H">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="S8w-EH-mjg" kind="push" identifier="ConfigureMeasurement" id="THG-L8-zwn"/>
+                                    <segue destination="S8w-EH-mjg" kind="push" identifier="ShowSensorLocation" id="8LE-Qi-iaM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -358,6 +358,7 @@
                             <outlet property="delegate" destination="rw7-xx-IwI" id="jog-Lk-FXG"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="vlj-1n-6Wp"/>
                     <connections>
                         <outlet property="flagLabel" destination="X2Y-g0-uZn" id="H30-f3-kuh"/>
                     </connections>
@@ -388,6 +389,31 @@
     <resources>
         <image name="BeetsHR.jpeg" width="301" height="168"/>
     </resources>
+    <classes>
+        <class className="BLESensorLocationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BLESensorLocationViewController.h"/>
+        </class>
+        <class className="HeartRateMeasurementConfigurationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeartRateMeasurementConfigurationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="flagLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PeripheralManagerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PeripheralManagerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="advertiseSwitch:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="heartRateStepper:" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="advertiseSwitchControl" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="heartRateStepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="heartRateValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hostBluetoothStatus" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

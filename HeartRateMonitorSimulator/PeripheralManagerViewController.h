@@ -12,6 +12,6 @@
 
 @interface PeripheralManagerViewController : UIViewController <CBPeripheralManagerDelegate, BLEHeartRateConfigurationProtocol>
 
-@property (nonatomic, readwrite) unsigned char heartRateMeasurementFlag;
+
 
 @end

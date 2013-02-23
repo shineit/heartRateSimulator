@@ -13,4 +13,6 @@
 
 @property (nonatomic, weak) id<BLEHeartRateConfigurationProtocol> delegate;
 
+@property (nonatomic, readwrite)unsigned char flagValue;
+
 @end
