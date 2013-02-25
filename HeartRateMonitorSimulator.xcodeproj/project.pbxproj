@@ -23,6 +23,7 @@
 		D99D1FBF16D51EF200F3D9F5 /* PeripheralManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D99D1FBE16D51EF200F3D9F5 /* PeripheralManagerViewController.m */; };
 		D9DDBD9B16D90E0E00BDB0BE /* BeetsHR.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = D9DDBD9A16D90E0E00BDB0BE /* BeetsHR.jpeg */; };
 		D9DDBD9E16D90FEF00BDB0BE /* HeartRateMeasurementConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DDBD9D16D90FEF00BDB0BE /* HeartRateMeasurementConfigurationViewController.m */; };
+		D9DDBDA216DC0EA100BDB0BE /* BLEMeasurementFlagRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = D9DDBDA116DC0EA100BDB0BE /* BLEMeasurementFlagRecord.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,8 @@
 		D9DDBD9C16D90FEF00BDB0BE /* HeartRateMeasurementConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateMeasurementConfigurationViewController.h; sourceTree = "<group>"; };
 		D9DDBD9D16D90FEF00BDB0BE /* HeartRateMeasurementConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateMeasurementConfigurationViewController.m; sourceTree = "<group>"; };
 		D9DDBD9F16D9177200BDB0BE /* BLEHeartRateConfigurationProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLEHeartRateConfigurationProtocol.h; sourceTree = "<group>"; };
+		D9DDBDA016DC0EA100BDB0BE /* BLEMeasurementFlagRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEMeasurementFlagRecord.h; sourceTree = "<group>"; };
+		D9DDBDA116DC0EA100BDB0BE /* BLEMeasurementFlagRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEMeasurementFlagRecord.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 		D99D1F9B16D51DFC00F3D9F5 /* HeartRateMonitorSimulator */ = {
 			isa = PBXGroup;
 			children = (
+				D9DDBDA016DC0EA100BDB0BE /* BLEMeasurementFlagRecord.h */,
+				D9DDBDA116DC0EA100BDB0BE /* BLEMeasurementFlagRecord.m */,
 				D9814E4C16D5884300887FD2 /* BLESensorLocationViewController.h */,
 				D9814E4D16D5884300887FD2 /* BLESensorLocationViewController.m */,
 				D99D1FBD16D51EF200F3D9F5 /* PeripheralManagerViewController.h */,
@@ -203,6 +208,7 @@
 				D99D1FBF16D51EF200F3D9F5 /* PeripheralManagerViewController.m in Sources */,
 				D9814E4E16D5884300887FD2 /* BLESensorLocationViewController.m in Sources */,
 				D9DDBD9E16D90FEF00BDB0BE /* HeartRateMeasurementConfigurationViewController.m in Sources */,
+				D9DDBDA216DC0EA100BDB0BE /* BLEMeasurementFlagRecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

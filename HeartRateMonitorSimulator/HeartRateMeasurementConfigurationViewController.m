@@ -7,6 +7,7 @@
 //
 
 #import "HeartRateMeasurementConfigurationViewController.h"
+#import "BLEMeasurementFlagRecord.h"
 
 @interface HeartRateMeasurementConfigurationViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *flagLabel;
@@ -15,10 +16,16 @@
 
 -(void)setCellAccessory:(NSIndexPath *)indexPath forValue:(BOOL)value;
 
+
+@property (nonatomic, readonly) NSArray *sectionTitles;
+
+@property (nonatomic, strong) NSMutableArray *tableData;
+
 @end
 
 @implementation HeartRateMeasurementConfigurationViewController
 
+@synthesize sectionTitles = _sectionTitles;
 @synthesize flagValue = _flagValue;
 
 #define NUMBER_OF_ROWS 9
@@ -32,15 +39,127 @@
 #define RR_INTERVAL_PRESENT 16
 
 
+#define FORMAT_ROWS         2
+#define SENSOR_CONTACT_ROWS 3
+#define ENERGY_ROWS         2
+#define RR_ROWS             2
 
--(void)updateTable
+
+#pragma mark- Properties
+
+-(NSArray *)sectionTitles
 {
+    if (_sectionTitles == nil)
+    {
+        _sectionTitles = [NSArray arrayWithObjects:@"Heart Rate Format",@"Sensor Contact", @"Energy Expended", @"RR-Interval", nil];
+    }
+    return _sectionTitles;
+}
+
+-(NSMutableArray *)tableData
+{
+    NSMutableArray *formatSection;
+    NSMutableArray *sensorSection;
+    NSMutableArray *energySection;
+    NSMutableArray *RRSection;
+    BLEMeasurementFlagRecord *record;
+    
+    if (_tableData == nil)
+    {
+        _tableData = [NSMutableArray arrayWithCapacity:NUMBER_OF_SECTIONS];
+        
+        for (NSUInteger section=0; section < NUMBER_OF_SECTIONS; section++)
+        {
+            switch (section)
+            {
+                case 0:
+                    formatSection = [NSMutableArray arrayWithCapacity:FORMAT_ROWS];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"8 Bit Value" andCheckMark:YES];
+                    
+                    [formatSection addObject:record];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc]initWithTitle:@"16 Bit Value" andCheckMark:NO];
+                    
+                    [formatSection addObject:record];
+
+                    [_tableData addObject:formatSection];
+                    break;
+                    
+                case 1:
+                    sensorSection = [NSMutableArray arrayWithCapacity:(NSUInteger)SENSOR_CONTACT_ROWS];
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Not Supported" andCheckMark:YES];
+                    [sensorSection addObject:record];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Supported - Contact Not Detected" andCheckMark:NO];
+                    [sensorSection addObject:record];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Supported - Contact Detected" andCheckMark:NO];
+                    [sensorSection addObject:record];
+                                        
+                    [_tableData addObject:sensorSection];
+                    break;
+                    
+                case 2:
+                    energySection = [NSMutableArray arrayWithCapacity:ENERGY_ROWS];
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Present" andCheckMark:NO];
+                    [energySection addObject:record];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Not Present" andCheckMark:YES];
+                    [energySection addObject:record];
+
+                                       
+                    [_tableData addObject:energySection];
+                    break;
+                case 3:
+                    
+                    RRSection = [NSMutableArray arrayWithCapacity:RR_ROWS];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Present" andCheckMark:NO];
+                    [RRSection addObject:record];
+                    
+                    record = [[BLEMeasurementFlagRecord alloc] initWithTitle:@"Not Present" andCheckMark:YES];
+                    [RRSection addObject:record];
+
+                    
+                    [_tableData addObject:RRSection];
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    
+    return _tableData;
+}
+
+
+
+-(void)setCellAccessory:(NSIndexPath *)indexPath forValue:(BOOL)value
+{
+    DLog(@"Entering setCellAccessory");
+    DLog(@"Section= %d  Row= %d",indexPath.section, indexPath.row);
+    // get the label from the label array and match it to a peripheral invocation
+    NSMutableArray *sectionRecords = [self.tableData objectAtIndex:indexPath.section];
+    BLEMeasurementFlagRecord *record = (BLEMeasurementFlagRecord*)[sectionRecords objectAtIndex:indexPath.row];
+    record.hasCheckMark = value ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    
+}
+
+
+
+
+
+// Updates the data table whenever the flagValue is changed
+-(void)updateTableData
+{
+  
+    DLog(@"Entering updateTableData");
     NSIndexPath *indexPath;
-    UITableViewCell* cell;
     
     // 8 or 16 bit measurement values
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
     if (self.flagValue & MEASUREMENT_IS_TWO_BYTES)
     {
         [self setCellAccessory:indexPath forValue:NO];
@@ -56,7 +175,7 @@
     
     // contact sensor data
     indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
+   
     if ( ! (self.flagValue & CONTACT_SUPPORTED) )
     {
         [self setCellAccessory:indexPath forValue:YES];
@@ -90,7 +209,7 @@
     
     // Energy Expended
     indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
     if (self.flagValue & ENERGY_EXPENDED_PRESENT)
     {
         [self setCellAccessory:indexPath forValue:YES];
@@ -106,7 +225,7 @@
     
     // RR Interval
     indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
     if (self.flagValue & RR_INTERVAL_PRESENT)
     {
         [self setCellAccessory:indexPath forValue:YES];
@@ -119,12 +238,21 @@
         indexPath = [NSIndexPath indexPathForRow:1 inSection:3];
         [self setCellAccessory:indexPath forValue:YES];
     }
+    
+    [self.tableView reloadData];
 
 }
 
 -(void)setFlagValue:(unsigned char)flagValue
 {
     _flagValue = flagValue;
+    
+    [self updateTableData];
+}
+
+-(unsigned char)flagValue
+{
+    return _flagValue;
 }
 
 
@@ -152,10 +280,6 @@
 }
 
 
--(unsigned char)flagValue
-{
-    return _flagValue;
-}
 
 
 
@@ -172,7 +296,7 @@
 {
     [super viewDidLoad];
     
-    [self updateTable];
+   
 
 }
 
@@ -182,7 +306,7 @@
     NSLog(@"Flag Value= %u",(unsigned int)self.flagValue);
     self.flagLabel.text = self.flagString;
     
-    [self updateTable];
+   
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,45 +317,70 @@
 
 
 
--(void)setCellAccessory:(NSIndexPath *)indexPath forValue:(BOOL)value
+
+
+
+#pragma mark - Table view data source
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    UITableViewCell* cell;
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = value ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     
+    return [self.tableData count];
 }
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.sectionTitles[section];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSUInteger numRowsSection;
+    
+    numRowsSection = [[self.tableData objectAtIndex:section] count];
+    return numRowsSection;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell;
+    static NSString *CellIdentifier = @"flagValue";
+    
+
+    //DLog(@"Index= %i",indexPath.row);
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+  
+    // get the label from the label array and match it to a peripheral invocation
+    NSMutableArray *sectionRecords = [self.tableData objectAtIndex:indexPath.section];
+    BLEMeasurementFlagRecord *record = (BLEMeasurementFlagRecord*)[sectionRecords objectAtIndex:indexPath.row];
+    cell.textLabel.text = record.title;
+   
+    cell.accessoryType = record.hasCheckMark ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    
+    return cell;
+}
+
+
 
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSIndexPath *temp;
     switch (indexPath.section)
     {
         case 0:
             if (indexPath.row == 0)
             {
-                // 8 bit heart rate measurement
-                [self setCellAccessory:indexPath forValue:YES];
-                
-                //16 bit heart rate measurement
-                temp = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
                 // clear the lsb to indicate 8 bit data
                 self.flagValue = self.flagValue & 0xFE;
                
             }
             else
             {
-                //16 bit heart rate measurement
-                [self setCellAccessory:indexPath forValue:YES];
-                
-                // 8 bit heart rate measurement
-                temp = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
                 // set the lsb to indicate 16-bit data
                 self.flagValue = self.flagValue | 0x01;
             }
@@ -239,95 +388,42 @@
         case 1:
             if (indexPath.row == 0)
             {
-                // sensor contact not supported
-                [self setCellAccessory:indexPath forValue:YES];
-                
                 // clear bits 2 & 3
                 self.flagValue = self.flagValue & 0xF9;
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
-                
             }
             else if(indexPath.row == 1)
             {
-                // sensor contact not detected
-                [self setCellAccessory:indexPath forValue:YES];
-                
                 // set bit 2, clear bit 3
-                self.flagValue = self.flagValue | 0x02;
-                self.flagValue = self.flagValue & 0xFB;
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
+                self.flagValue = (self.flagValue | 0x02) & 0xFB ;
             }
             else
             {
-                //sensor contact detected
-                [self setCellAccessory:indexPath forValue:YES];
-                
                 // set bits 2 and 3
                 self.flagValue = self.flagValue | 0x06;
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row-2 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
             }
             break;
         case 2:
             if (indexPath.row == 0)
             {
-               [self setCellAccessory:indexPath forValue:YES];
-                
                 // expended energy
                 // set bit 4
                  self.flagValue = self.flagValue | 0x08;
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
             }
             else
             {
-                [self setCellAccessory:indexPath forValue:YES];
-                
+                                
                 // clear bit 4
                  self.flagValue = self.flagValue & 0xF7;
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
             }
             break;
         case 3:
             if (indexPath.row == 0)
             {
-                [self setCellAccessory:indexPath forValue:YES];
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
                 // set bit 5
                 self.flagValue = self.flagValue | 0x10;
-
             }
             else
             {
-                [self setCellAccessory:indexPath forValue:YES];
-                
-                temp = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
-                [self setCellAccessory:temp forValue:NO];
-                
                 // clear bit 5
                 self.flagValue = self.flagValue & 0xEF;
 
@@ -338,7 +434,8 @@
    
     self.flagLabel.text = self.flagString;
     
-    [self.delegate setHeartRateMeasurementFlag:_flagValue];
+    [self.delegate setHeartRateMeasurementFlag:self.flagValue];
+    
 }
 
 

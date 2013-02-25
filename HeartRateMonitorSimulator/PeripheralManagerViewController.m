@@ -72,12 +72,7 @@
 #pragma mark- Properties
 
 
--(void)setHeartRateMeasurementFlag: (unsigned char)flag
-{
-    
-    _heartRateMeasurementFlag = flag;
-    DLog(@"heartRateMeasurementFlag Updated %d",flag);
-}
+
 
 
 // Getter for transmit queue
@@ -99,7 +94,7 @@
     
     data[0] = self.heartRateMeasurementFlag;
     
-    
+    DLog(@"Sending Measurement Flag Value %u",self.heartRateMeasurementFlag);
     
     if ( self.heartRateMeasurementFlag & 0x01)
     {
@@ -379,7 +374,13 @@
     return stateName;
 }
 
-
+#pragma mark- BLEHeartRateConfigurationProtocol
+-(void)setHeartRateMeasurementFlag: (unsigned char)flag
+{
+    
+    _heartRateMeasurementFlag = flag;
+    DLog(@"heartRateMeasurementFlag Updated %d",flag);
+}
 
 #pragma mark- CBPeripheralManagerDelegate Protocol Methods
 
