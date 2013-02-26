@@ -134,7 +134,48 @@
 }
 
 
+-(void)setFlagValue:(unsigned char)flagValue
+{
+    _flagValue = flagValue;
+    
+    [self updateTableData];
+}
 
+-(unsigned char)flagValue
+{
+    return _flagValue;
+}
+
+
+
+-(NSString *)flagString
+{
+    _flagString=@"  Characteristic Flag Bits= [";
+    unsigned char byteArray[8];
+    unsigned char temp = self.flagValue;
+    for (NSInteger bit = 7; bit >=0; bit--)
+    {
+        byteArray[bit] = temp & 0x80;
+        if (byteArray[bit])
+        {
+            _flagString = [_flagString stringByAppendingString:@"1"];
+        }
+        else
+        {
+            _flagString = [_flagString stringByAppendingString:@"0"];
+        }
+        temp = temp << 1;
+    }
+    _flagString = [_flagString stringByAppendingString:@"]"];
+    return _flagString;
+}
+
+
+
+#pragma mark- Private Methods
+
+
+// Update the table data source with the user selected check mark accessory
 -(void)setCellAccessory:(NSIndexPath *)indexPath forValue:(BOOL)value
 {
     DLog(@"Entering setCellAccessory");
@@ -148,9 +189,15 @@
 
 
 
-
-
-// Updates the data table whenever the flagValue is changed
+/*
+ *
+ * Method Name:  updateTableData
+ *
+ * Description:  Updates the table data source in response to user selections or new format flag value from an upstream controller.
+ *
+ * Parameter(s): none
+ *
+ */
 -(void)updateTableData
 {
   
@@ -243,45 +290,9 @@
 
 }
 
--(void)setFlagValue:(unsigned char)flagValue
-{
-    _flagValue = flagValue;
-    
-    [self updateTableData];
-}
-
--(unsigned char)flagValue
-{
-    return _flagValue;
-}
 
 
-
--(NSString *)flagString
-{
-    _flagString=@"  Characteristic Flag Bits= [";
-    unsigned char byteArray[8];
-    unsigned char temp = self.flagValue;
-    for (NSInteger bit = 7; bit >=0; bit--)
-    {
-        byteArray[bit] = temp & 0x80;
-        if (byteArray[bit])
-        {
-            _flagString = [_flagString stringByAppendingString:@"1"];
-        }
-        else
-        {
-            _flagString = [_flagString stringByAppendingString:@"0"];
-        }
-        temp = temp << 1;
-    }
-     _flagString = [_flagString stringByAppendingString:@"]"];
-    return _flagString;
-}
-
-
-
-
+#pragma mark- View Controller Lifecycle
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -308,14 +319,6 @@
     
    
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 
 
@@ -368,11 +371,21 @@
 
 #pragma mark - Table view delegate
 
+/*
+ *
+ * Method Name:  didSelectRowAtIndexPath:
+ *
+ * Description:  Update the measurement format flagValue in response to the user selecting an option from the table.
+ *
+ * Parameter(s): indexPath - indexPath for selected row
+ *
+ */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section)
     {
         case 0:
+            // Choose either 8-bit or 16-bit heart rate value format
             if (indexPath.row == 0)
             {
                 // clear the lsb to indicate 8 bit data
@@ -386,6 +399,7 @@
             }
             break;
         case 1:
+            // Contact sensor availability
             if (indexPath.row == 0)
             {
                 // clear bits 2 & 3
@@ -403,6 +417,7 @@
             }
             break;
         case 2:
+            // expended energy availability
             if (indexPath.row == 0)
             {
                 // expended energy
@@ -417,6 +432,7 @@
             }
             break;
         case 3:
+            // RR interval availability
             if (indexPath.row == 0)
             {
                 // set bit 5
