@@ -365,14 +365,7 @@
         
             
             DLog(@"Heart Rate Measurement Sent: %u",bpm);
-            unsigned short energy;
-            if (flag & ENERGY_EXPENDED_PRESENT)
-            {
-                energy = CFSwapInt16LittleToHost(*(uint16_t *)(&reportData[2]));
-                
-                DLog(@"Expended energy= %u",energy);
-                
-            }
+            
         }
     }
 }
