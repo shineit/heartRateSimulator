@@ -89,26 +89,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Xja-x3-6P6" secondAttribute="bottom" constant="45" id="2D3-34-UZ9"/>
                             <constraint firstItem="Ane-TZ-zIG" firstAttribute="centerX" secondItem="sLg-GB-zVX" secondAttribute="centerX" type="default" id="77x-fq-qRG"/>
-                            <constraint firstItem="YyS-MO-tJC" firstAttribute="centerX" secondItem="Xja-x3-6P6" secondAttribute="centerX" type="default" id="82W-Cr-vH9"/>
                             <constraint firstItem="Ane-TZ-zIG" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="162" id="BeF-cA-bfG"/>
                             <constraint firstAttribute="trailing" secondItem="Buf-Z9-f6e" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="BiE-cL-dDE"/>
                             <constraint firstItem="Buf-Z9-f6e" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="49" id="F4R-DG-nJ6"/>
-                            <constraint firstItem="r8u-gX-w2H" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="57" id="INM-7h-gwY"/>
                             <constraint firstItem="r4P-we-w7n" firstAttribute="centerX" secondItem="c70-3v-1YZ" secondAttribute="centerX" type="default" id="N74-QO-MiI"/>
                             <constraint firstItem="c70-3v-1YZ" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="13" id="X4e-UT-9NA"/>
+                            <constraint firstItem="r8u-gX-w2H" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="58" id="X4g-YO-sEg"/>
                             <constraint firstItem="2op-gH-srm" firstAttribute="leading" secondItem="60n-6W-zFB" secondAttribute="leading" type="default" id="YCP-iE-eOW"/>
                             <constraint firstItem="r4P-we-w7n" firstAttribute="top" secondItem="Buf-Z9-f6e" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="YWH-Tl-uia"/>
-                            <constraint firstAttribute="bottom" secondItem="YyS-MO-tJC" secondAttribute="bottom" constant="142" id="c9z-aj-AiT"/>
-                            <constraint firstAttribute="bottom" secondItem="r8u-gX-w2H" secondAttribute="bottom" constant="107" id="cqF-4u-yO0"/>
+                            <constraint firstAttribute="bottom" secondItem="r8u-gX-w2H" secondAttribute="bottom" constant="158" id="YXn-Od-Op7"/>
+                            <constraint firstItem="YyS-MO-tJC" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="14" id="Zc6-up-Avy"/>
+                            <constraint firstAttribute="bottom" secondItem="YyS-MO-tJC" secondAttribute="bottom" constant="102" id="cZd-nv-t3O"/>
+                            <constraint firstItem="YyS-MO-tJC" firstAttribute="leading" secondItem="2op-gH-srm" secondAttribute="leading" type="default" id="h9b-Fb-LDF"/>
                             <constraint firstItem="r8u-gX-w2H" firstAttribute="centerX" secondItem="sLg-GB-zVX" secondAttribute="centerX" type="default" id="hxL-ss-2hb"/>
                             <constraint firstItem="60n-6W-zFB" firstAttribute="top" secondItem="89j-Gq-1xW" secondAttribute="top" constant="60" id="jAE-cr-geS"/>
-                            <constraint firstItem="60n-6W-zFB" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="14" id="k5v-ps-Aag"/>
                             <constraint firstItem="c70-3v-1YZ" firstAttribute="leading" secondItem="89j-Gq-1xW" secondAttribute="leading" constant="93" id="kUo-fh-hWJ"/>
                             <constraint firstItem="2op-gH-srm" firstAttribute="top" secondItem="60n-6W-zFB" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="rLQ-tx-csf"/>
                             <constraint firstItem="Xja-x3-6P6" firstAttribute="centerX" secondItem="89j-Gq-1xW" secondAttribute="centerX" type="default" id="vF0-fe-mue"/>
                             <constraint firstItem="sLg-GB-zVX" firstAttribute="top" secondItem="Ane-TZ-zIG" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="y1P-5I-ESg"/>
+                            <constraint firstAttribute="bottom" secondItem="Xja-x3-6P6" secondAttribute="bottom" constant="41" id="z3S-aj-JXA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Simulator" id="ynx-lP-0Cu"/>
@@ -234,6 +234,31 @@
     <resources>
         <image name="BeetsHR.jpeg" width="301" height="168"/>
     </resources>
+    <classes>
+        <class className="BLESensorLocationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BLESensorLocationViewController.h"/>
+        </class>
+        <class className="HeartRateMeasurementConfigurationViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HeartRateMeasurementConfigurationViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="flagLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PeripheralManagerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PeripheralManagerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="advertiseSwitch:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="heartRateStepper:" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="advertiseSwitchControl" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="heartRateStepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="heartRateValueLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hostBluetoothStatus" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

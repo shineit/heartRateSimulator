@@ -86,30 +86,48 @@
 }
 
 
+#define ENERGY_EXPENDED_PRESENT 8
+
 // lazy initializer/getter for heart rate data
 -(void)updateHeartRateData
 {
-    unsigned char data[3];
-    NSUInteger dataLength = 2;
+    unsigned char data[10];
+    NSUInteger dataLength = 0;
     
-    data[0] = self.heartRateMeasurementFlag;
+    data[dataLength++] = self.heartRateMeasurementFlag;
+    
     
     DLog(@"Sending Measurement Flag Value %u",self.heartRateMeasurementFlag);
     
     if ( self.heartRateMeasurementFlag & 0x01)
     {
-        // for now switch back to 1 byte
-        self.heartRateMeasurementFlag = self.heartRateMeasurementFlag & 0xFE;
-        // heart rate measurement is 16 bits
-        // for now put the single byte of data in the lsb
-        data[1] = self.heartRate;
-       
-        
+        // send heart rate as 2 bytes        
+        unsigned short integerHeartRate = self.heartRate;
+        unsigned char lsb = (unsigned char) integerHeartRate & 0xFF;
+        data[dataLength++] = lsb;
+                
+        unsigned char msb = (unsigned char)(integerHeartRate >> 8);
+        data[dataLength++] = msb;
+               
     }
     else
     {
-        data[1] = self.heartRate;
-        dataLength = 2;
+        data[dataLength++] = self.heartRate;
+    }
+    
+    // check energy expended flag
+    if (self.heartRateMeasurementFlag & ENERGY_EXPENDED_PRESENT)
+    {
+        // add two bytes of energy data
+        // use heart rate  * 10 for value
+        unsigned short energy = self.heartRate * 10;
+        unsigned char lsb = (unsigned char) energy & 0xFF;
+        data[dataLength++] = lsb;
+       
+        
+        unsigned char msb = (unsigned char) (energy >> 8);
+        data[dataLength++] = msb;
+                
     }
     
     // set the data
@@ -329,13 +347,32 @@
             // log data that was sent
             const uint8_t *reportData = [self.heartRateData  bytes];
             
+            NSUInteger bpm;
+            
             NSUInteger flag = reportData[0];
             DLog(@"flag = %i",flag);
             
-            NSUInteger bpm = 0;
-            bpm = reportData[1];
+            if (flag & 0x01)
+            {
+                // 16 bits of heart rate data
+                bpm = CFSwapInt16LittleToHost(*(uint16_t *)(&reportData[1]));
+                
+            }
+            else
+            {
+                bpm = reportData[1];
+            }
+        
             
-            DLog(@"Heart Rate Measurement Sent: %i",bpm);
+            DLog(@"Heart Rate Measurement Sent: %u",bpm);
+            unsigned short energy;
+            if (flag & ENERGY_EXPENDED_PRESENT)
+            {
+                energy = CFSwapInt16LittleToHost(*(uint16_t *)(&reportData[2]));
+                
+                DLog(@"Expended energy= %u",energy);
+                
+            }
         }
     }
 }
