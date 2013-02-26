@@ -363,7 +363,6 @@
                 bpm = reportData[1];
             }
         
-            
             DLog(@"Heart Rate Measurement Sent: %u",bpm);
             
         }
