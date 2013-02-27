@@ -36,7 +36,7 @@
 // outlet for switch used to turn advertising on/off
 @property (weak, nonatomic) IBOutlet UISwitch *advertiseSwitchControl;
 
-// peripheralManager property wihc manafges advertising, connection state, etc.
+// peripheralManager property which manages advertising, connection state, etc.
 @property (strong, nonatomic)CBPeripheralManager        *peripheralManager;
 
 // the mutable heart rate serve
@@ -70,9 +70,6 @@
 @implementation PeripheralManagerViewController
 
 #pragma mark- Properties
-
-
-
 
 
 // Getter for transmit queue
